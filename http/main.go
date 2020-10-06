@@ -2,7 +2,10 @@ package main
 
 import (
 	"io"
+	"log"
 	"net/http"
+
+	"github.com/gabrielnascr/golang-study/http/middleware"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -10,6 +13,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8888", nil)
+	http.HandleFunc("/", middleware.BasicMiddleware(handler))
+	log.Fatal(http.ListenAndServe(":3333", nil))
 }
